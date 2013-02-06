@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: answers
+#
+#  id          :integer          not null, primary key
+#  question_id :integer
+#  content     :text
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  bucket      :integer
+#
+
 require 'test_helper'
 
 class AnswerTest < ActiveSupport::TestCase

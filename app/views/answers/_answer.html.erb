@@ -1,0 +1,10 @@
+<%= @div %>
+
+      <% @question.answers.each do |answer| %>
+      	<% if answer.id == @answer.id%>
+      		<%= answer.content%>
+        <%end%>
+        <li><%= answer.bucket %></li>
+      <% end %>
+</div>
+   

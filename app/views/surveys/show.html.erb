@@ -2,16 +2,26 @@
 
 <ol class="questions">
 <% @survey.questions.each do |question| %>
-  <li>
-    <%= question.content %>
-    <ol class="answers">
-      <% question.answers.each do |answer| %>
-        <li><%= answer.content %></li>
+  <div class="row container">
+    <div class="span4">
+      <%= question.content %>
+    </div>
+    <div class="span4">
+      <%= content_tag_for(:div, question) do %>
+        <% question.answers.each do |answer| %>
+          
+            <%= link_to answer.content, 
+            add_survey_path(answer),
+            :class => 'btn btn-primary btn-large',
+            :remote => true %>
+
+        <% end %>
       <% end %>
-    </ol>
-  </li>
+    </div>
 <% end %>
 </ol>
 
-<%= link_to 'Edit', edit_survey_path(@survey) %> |
+<%= link_to 'Edit', edit_survey_path(@survey) %>
 <%= link_to 'Back to Surveys', surveys_path %>
+
+
