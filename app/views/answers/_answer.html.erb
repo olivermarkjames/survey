@@ -1,10 +1,41 @@
-<%= @div %>
 
+<div id='"<%= escape_javascript(answer.content) %>"' style="width: 400px; height: 200px;"></div>
+<%= @div %>
       <% @question.answers.each do |answer| %>
       	<% if answer.id == @answer.id%>
-      		<%= answer.content%>
+          <%= @select%>
         <%end%>
         <li><%= answer.bucket %></li>
       <% end %>
+        
 </div>
+<script type='text/javascript'>     
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+           <% @question.answers.each do |answer| %>
+           <% if answer.id == @answer.id%>
+            <% @select = @counter %>
+           <%end%>
+           <% @counter += 1 %>
+          ['"<%= escape_javascript(answer.content) %>"', parseInt("<%= escape_javascript(answer.bucket.to_s) %>")],
+          <% end %>
+        ]);
+
+        var options = {
+          legend: {position: 'left', alignment: 'center', textStyle: {color: 'blue', fontSize: 16}},
+          colors: ['red']
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('"<%= escape_javascript(answer.content) %>"'));
+        chart.draw(data, options);
+        chart.setSelection([{'row':parseInt("<%= escape_javascript(@select.to_s) %>")}]);
+      }
+      $(function() {
+   drawChart();
+});
+</script>
+
+
+
    

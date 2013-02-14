@@ -43,6 +43,8 @@ class SurveysController < ApplicationController
     @answer = Answer.find(params[:id])
     @answer.add
     @question = Question.where(:id => @answer.question_id).first
+    @counter = 0
+    @select = 0
     @div = "#question_" + @question.id.to_s
     #respond_with(@comment)
     respond_to do |format|
