@@ -1,26 +1,31 @@
 <h1><%= @survey.name %></h1>
-<ol class="questions">
-<% @survey.questions.each do |question| %>
-  <div class="row container">
-    <div class="span4">
-      <%= question.content %>
-    </div>
-    <div class="span4">
+
+
+<% @survey.questions.each_with_index do |question, question_index| %>
+    <% @qi=question_index %><% if @qi==8 %><% qi=0%><% end %>
+  <div class="row-fluid survey color-<%= escape_javascript(question_index.to_s)%>" > 
+    <div class="span3"><h3><%= (question_index+1).to_s %></h3></div>
+    <div class="span9"><h1><%= question.content %></h1>
+    
       <%= content_tag_for(:div, question) do %>
-        <% question.answers.each do |answer| %>
-          
+        
+        <% question.answers.each_with_index do |answer, answer_index| %>
+        <% if !answer_index.odd? %><div class="row demo-row"><% end %>
+          <div class="span5">
             <%= link_to answer.content, 
             add_survey_path(answer),
-            :class => 'btn btn-primary btn-large',
+            :class => 'btn btn-large btn-block btn-'+answer_index.to_s,
             :remote => true %>
-
-        <% end %>
+          </div>
+        <% if answer_index.odd? %></div><% end %>
+        <% end %>       
       <% end %>
     </div>
+  </div>
 <% end %>
-</ol>
 
 <%= link_to 'Edit', edit_survey_path(@survey) %>
 <%= link_to 'Back to Surveys', surveys_path %>
+
 
 
